@@ -16,6 +16,9 @@ export default async function generateShield(p) {
     offline: "555",
   };
 
+  // fall back to the online green (useful for servers)
+  const presenceColor = presenceColors?.[presence] || presenceColors.online
+
   switch (p.theme) {
     case "blurple": {
       o.color = "5865F2";
@@ -29,28 +32,28 @@ export default async function generateShield(p) {
       break;
     }
     case "full-presence": {
-      o.color = presenceColors[presence];
-      o.labelColor = presenceColors[presence];
+      o.color = presenceColor;
+      o.labelColor = presenceColor;
       break;
     }
     case "discord-inverted": {
-      o.color = presenceColors[presence];
+      o.color = presenceColor;
       o.labelColor = "5865F2";
       break;
     }
     case "discord": {
       o.color = "5865F2";
-      o.labelColor = presenceColors[presence];
+      o.labelColor = presenceColor;
       break;
     }
     case "clean-inverted": {
-      o.color = presenceColors[presence];
+      o.color = presenceColor;
       o.labelColor = "555";
       break;
     }
     case "clean": {
       o.color = "555";
-      o.labelColor = presenceColors[presence];
+      o.labelColor = presenceColor;
       break;
     }
     case "default-inverted": {
@@ -66,7 +69,7 @@ export default async function generateShield(p) {
   }
 
   if (p.logoColor === "presence") {
-    o.logoColor = presenceColors[presence];
+    o.logoColor = presenceColor;
   } else if (p.logoColor) {
     o.logoColor = p.logoColor;
   } else {
