@@ -96,6 +96,8 @@ export default async function generateShield(p) {
     shield = shield
       .replaceAll('font-weight="bold"', "")
       .replaceAll("<text ", "<text font-weight='bold' ");
+  } else if (o.style === "social") {
+    shield = shield.replaceAll(`${username[0].toUpperCase()}${username.slice(1)}`, username)
   }
 
   return shield;
