@@ -1,9 +1,10 @@
 import "dotenv/config";
 
 const regexes = {
-  invite:
+  inviteUrl:
     /discord(?:(?:app)?\.com\/invite|\.gg(?:\/invite)?)\/(?<code>[\w-]{2,255})/i, // https://github.com/discordjs/discord.js/blob/e673b3c129f288f9f271e0b991d16dc2901cdc8a/packages/discord.js/src/structures/Invite.js#L21C3-L21C104
-};
+  inviteID: /^[\w-]{2,255}$/
+  };
 
 // set up in-memory key-value store for caching
 import Keyv from "keyv";
@@ -14,7 +15,13 @@ import { ProxyAgent } from "undici";
 const dispatcher = new ProxyAgent(process.env.PROXY_URL);
 
 export default async function fetchServerInfo(invite) {
-  const inviteID = regexes.invite.exec(invite)?.groups?.code ?? invite;
+  const inviteID = regexes.inviteUrl.exec(invite)?.groups?.code ?? invite;
+
+  if (!inviteID || !regexes.inviteID.test(inviteID)) {
+    return {
+      error: "Invalid invite code",
+    };
+  }
 
   let serverInfo = await keyv.get(inviteID);
 
