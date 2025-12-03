@@ -9,8 +9,7 @@
     "keyv": "^5.2.3",
     "node-fetch-cache": "^4.1.1",
     "undici": "^7.2.3",
-    "utf-8-validate": "^6.0.3",
-    "zlib-sync": "^0.1.9"
+    "utf-8-validate": "^6.0.3"
   },
   "scripts": {
     "start": "node ./src/index.js"
